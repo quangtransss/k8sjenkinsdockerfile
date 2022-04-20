@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  demo
+  labels:
+    app:  demo
+spec:
+  selector:
+    matchLabels:
+      app: demo
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app:  demo
+    spec:
+      containers:
+      - image:  mongo
+        name:  demo
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  demo
+spec:
+  selector:
+    app: demo
+  type:  ClusterIP
+  ports:
+  - name:  demo
+    port:  27017
+    targetPort:  27017
+---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: bank-ingress
+#   labels:
+#     app: banking
+#   annotations:
+#     kubernetes.io/ingress.class: nginx
+#     nginx.ingress.kubernetes.io/use-regex: "true"
+# spec:
+#   rules:
+#   - host: api-gateway-dashboard-testing.medpro.com.vn
+#     http:
+#       paths:
+#       - pathType: Prefix
+#         path: /?(.*)
+#         backend:
+#           service:
+#             name: svc-bank
+#             port:
+#               number: 8080
+#   tls:
+#     - hosts:
+#       - api-gateway-dashboard-testing.medpro.com.vn
+#       secretName: medpro
