@@ -60,7 +60,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-  - host: api-gateway-dashboard-testing.medpro.com.vn    #ten mien truy cap
+  - host:     #ten mien truy cap
     http:
       paths:
       - pathType: Prefix
@@ -72,5 +72,5 @@ spec:
               number: 8080
   tls:
     - hosts:
-      - api-gateway-dashboard-testing.medpro.com.vn
+      - 
       secretName: medpro
